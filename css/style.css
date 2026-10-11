@@ -79,9 +79,9 @@ body.fallback[data-scene="s7"] {
 
 /* a glass card — the single building block */
 .gcard {
-  background: linear-gradient(150deg, rgba(255,255,255,0.20) 0%, var(--glass) 45%, rgba(255,255,255,0.08) 100%);
-  -webkit-backdrop-filter: blur(var(--blur)) saturate(170%);
-  backdrop-filter: blur(var(--blur)) saturate(170%);
+  background: linear-gradient(150deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.03) 100%);
+  -webkit-backdrop-filter: blur(var(--blur)) saturate(190%);
+  backdrop-filter: blur(var(--blur)) saturate(190%);
   border: 1px solid var(--glass-border);
   border-radius: 26px;
   box-shadow:
@@ -112,6 +112,10 @@ body.fallback[data-scene="s7"] {
 .cards.c2 { grid-template-columns: 1fr 1fr; }
 .cards.c3 { grid-template-columns: 1fr 1fr 1fr; }
 .cards .span2 { grid-column: 1 / -1; }
+.cards.split { grid-template-columns: 1fr 1.5fr; align-items: stretch; }
+.cards.split .pie { width: 168px; height: 168px; flex-basis: 168px; }
+.cards.split .pie-hole { width: 104px; height: 104px; }
+.cards.split .pie-big { font-size: 29px; }
 
 .panel h1, .panel h2 { font-family: var(--font-head); color: var(--ink); line-height: 1.06; letter-spacing: -0.6px; }
 .panel h1 { font-size: 64px; font-weight: 800; }
@@ -142,7 +146,7 @@ body.fallback[data-scene="s7"] {
 /* mini chip — projected dead-center for visibility */
 .chip {
   position: absolute; width: auto; max-width: 86vw; padding: 20px 40px;
-  background: linear-gradient(150deg, rgba(255,255,255,0.22), var(--glass));
+  background: linear-gradient(150deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05));
   -webkit-backdrop-filter: blur(var(--blur)) saturate(170%);
   backdrop-filter: blur(var(--blur)) saturate(170%);
   border: 1px solid var(--glass-border-hi);
@@ -208,7 +212,7 @@ body.fallback[data-scene="s7"] {
 .pie-sub { font-size: 11px; font-weight: 800; color: var(--ink-dim); letter-spacing: 2px;
   text-transform: uppercase; margin-top: 3px; }
 .pie-side { flex: 1; min-width: 0; }
-.pie-cap { font-size: 21px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.pie-cap { font-size: 18px; font-weight: 800; color: var(--ink); line-height: 1.25; }
 .pie-note { font-size: 13.5px; font-weight: 600; color: var(--ink-dim); margin-top: 3px; }
 .pie-legend { margin-top: 10px; display: grid; gap: 6px; }
 .pie-leg { display: flex; align-items: center; gap: 10px; font-size: 15px; }
@@ -257,8 +261,8 @@ body.fallback[data-scene="s7"] {
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
 .stats4 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .stat {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
   border-radius: 18px; padding: 14px 8px 12px; text-align: center;
 }
 .stat .num { font-size: 40px; font-weight: 800; color: var(--ink); line-height: 1;

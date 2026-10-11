@@ -138,7 +138,8 @@ const Overlay = (() => {
     const a = c.areaProfile;
     const cells = a.stats.map(s =>
       '<div class="stat"><div class="num" data-v="' + s.value + '" data-s="' + (s.suffix || "") + '" data-d="' + (s.decimals || 0) + '">0</div><div class="lbl">' + s.label + "</div></div>").join("");
-    /* donut pie of the community mix — left; big SC/ST callout + legend — right */
+    /* donut pie of the community mix — its own box on the LEFT;
+       all the block numbers — their own card on the RIGHT */
     let acc = 0;
     const segs = a.highlight.pie.map(s => {
       const from = acc; acc += s.pct;
@@ -150,14 +151,14 @@ const Overlay = (() => {
     return '<div class="cards">' +
       '<div class="gcard featured"><div class="kicker ir">Stop 2 · Area Profile</div><h2 class="ir">' + a.place + "</h2>" +
         '<div class="muted ir">' + a.intro + "</div></div>" +
-      '<div class="gcard"><div class="pie-wrap">' +
-        '<div class="pie ir" style="background:conic-gradient(' + segs + ')"><div class="pie-hole"><span class="pie-big">' + a.highlight.big + '</span><span class="pie-sub">SC / ST</span></div></div>' +
-        '<div class="pie-side">' +
-          '<div class="pie-cap ir">' + a.highlight.caption + "</div>" +
-          '<div class="pie-note ir">' + a.highlight.note + "</div>" +
+      '<div class="cards split">' +
+        '<div class="gcard"><div class="pie-cap ir">Who lives here</div>' +
+          '<div class="pie ir" style="background:conic-gradient(' + segs + ')"><div class="pie-hole"><span class="pie-big">' + a.highlight.big + '</span><span class="pie-sub">SC / ST</span></div></div>' +
           '<div class="pie-legend">' + legend + "</div>" +
-        "</div></div></div>" +
-      '<div class="gcard featured"><div class="stats stats4">' + cells + "</div></div></div>";
+          '<div class="pie-note ir">' + a.highlight.note + "</div>" +
+        "</div>" +
+        '<div class="gcard featured"><div class="stats stats4 right">' + cells + "</div></div>" +
+      "</div></div>";
   };
 
   T.actionsAll = (c) => {
