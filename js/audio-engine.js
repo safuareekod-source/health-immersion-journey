@@ -280,6 +280,7 @@ const Sfx = (() => {
   }
   function isMuted() { return muted; }
 
-  return { unlock, whoosh, paper, ink, thud, stamp, pop, chime, birds, rainStart, rainStop, slap: paper, toggleMute, isMuted, musicStart, musicStop, begin, celebrate };
+  return { unlock, whoosh, paper, ink, thud, stamp, pop, chime, birds, rainStart, rainStop, slap: paper, toggleMute, isMuted, musicStart, musicStop, begin, celebrate,
+    get musicPlaying() { return !!musicTimer && !!ctx && ctx.state === "running"; } };
 })();
 window.Sfx = Sfx;

@@ -29,11 +29,17 @@ const S1 = (() => {
 
   /* opening music: try to start immediately; browsers block audio until the
      first gesture, so also arm every gesture type — it begins at the very
-     first click / key / wheel / touch, and stops when Begin is pressed */
+     first click / key / wheel / touch, and stops when Begin is pressed.
+     A visible pill guarantees one obvious click if nothing else works. */
+  let pillEl = null;
   function tryMusic() {
     if (started) return;
     Sfx.unlock();
     Sfx.musicStart();
+    hidePill();
+  }
+  function hidePill() {
+    if (pillEl) { pillEl.classList.add("hidden"); pillEl = null; }
   }
   function armMusic() {
     if (musicArmed) return;
@@ -46,6 +52,14 @@ const S1 = (() => {
     };
     ["pointerdown", "keydown", "wheel", "touchstart"].forEach(ev =>
       window.addEventListener(ev, go, { passive: true }));
+  }
+  function showPill() {
+    if (pillEl || W.fallback) return;
+    pillEl = document.createElement("div");
+    pillEl.id = "music-pill";
+    pillEl.innerHTML = '<span class="eq"><span></span><span></span><span></span></span>tap for music';
+    pillEl.addEventListener("click", tryMusic);
+    document.getElementById("ui").appendChild(pillEl);
   }
 
   function beats() {
@@ -68,6 +82,8 @@ const S1 = (() => {
             const el = Overlay.show(Overlay.T.hero(C), { pos: "pos-hero" });
             startBtnEl = el.querySelector("#start-btn");
             if (startBtnEl) startBtnEl.addEventListener("click", onStart);
+            /* if the browser blocked the auto start, invite one tap */
+            setTimeout(() => { if (!Sfx.musicPlaying) showPill(); }, 2600);
           }, W.fallback ? 0.1 : 1.6);
           return tl;
         }
@@ -80,6 +96,7 @@ const S1 = (() => {
           const tl = gsap.timeline();
           tl.add(() => {
             if (startBtnEl) { startBtnEl.disabled = true; }
+            hidePill();
             Overlay.show(Overlay.T.agenda(C), { pos: "pos-hero" });
             Sfx.paper();
           });
@@ -113,6 +130,7 @@ const S1 = (() => {
     started = true;
     Sfx.unlock();
     Sfx.musicStop(0.8);
+    hidePill();
     Sfx.begin();
     if (!W.fallback) {
       const tl = gsap.timeline();

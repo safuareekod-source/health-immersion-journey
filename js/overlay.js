@@ -112,7 +112,7 @@ const Overlay = (() => {
           '<div class="row ir"><span class="lab">Posted to</span><span>' + m.postedTo + "</span></div>" +
           '<div class="row ir"><span class="lab">From</span><span>' + m.presenterFrom + "</span></div>" +
         "</div>" +
-        '<div class="from-note ir">a journey from Kerala to the Santhal Pargana hills</div>' +
+        '<div class="from-note ir">A journey from Kerala to the Santhal Pargana hills</div>' +
         '<button class="start-btn" id="start-btn">' + (m.beginLabel || "Begin the Journey") + ' →</button>' +
       "</div></div></div>";
   };

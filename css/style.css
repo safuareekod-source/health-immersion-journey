@@ -22,7 +22,7 @@
   --font-body: 'Outfit', 'Segoe UI', sans-serif;
   --pw: 800px;                    /* main panel width — projected */
   --pw-mini: 460px;               /* small chip width */
-  --blur: 26px;
+  --blur: 13px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -79,7 +79,7 @@ body.fallback[data-scene="s7"] {
 
 /* a glass card — the single building block */
 .gcard {
-  background: linear-gradient(150deg, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.05) 45%, rgba(255,255,255,0.03) 100%);
+  background: linear-gradient(150deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.015) 100%);
   -webkit-backdrop-filter: blur(var(--blur)) saturate(190%);
   backdrop-filter: blur(var(--blur)) saturate(190%);
   border: 1px solid var(--glass-border);
@@ -146,7 +146,7 @@ body.fallback[data-scene="s7"] {
 /* mini chip — projected dead-center for visibility */
 .chip {
   position: absolute; width: auto; max-width: 86vw; padding: 20px 40px;
-  background: linear-gradient(150deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05));
+  background: linear-gradient(150deg, rgba(255,255,255,0.09), rgba(255,255,255,0.03));
   -webkit-backdrop-filter: blur(var(--blur)) saturate(170%);
   backdrop-filter: blur(var(--blur)) saturate(170%);
   border: 1px solid var(--glass-border-hi);
@@ -261,7 +261,7 @@ body.fallback[data-scene="s7"] {
 .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
 .stats4 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .stat {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255,255,255,0.035);
   border: 1px solid rgba(255,255,255,0.09);
   border-radius: 18px; padding: 14px 8px 12px; text-align: center;
 }
@@ -438,3 +438,21 @@ body.fallback[data-scene="s7"] {
 .panel::-webkit-scrollbar { width: 5px; }
 .panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 4px; }
 .panel::-webkit-scrollbar-track { background: transparent; }
+
+/* ---------- music pill (hero page) ---------- */
+#music-pill { position: fixed; left: 30px; bottom: 96px; z-index: 6;
+  display: flex; align-items: center; gap: 9px; cursor: pointer;
+  font-family: var(--font-head); font-size: 14.5px; font-weight: 700; color: var(--ink);
+  background: rgba(255,255,255,0.10);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,217,122,0.5);
+  padding: 9px 18px; border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(3,10,7,0.45), 0 0 22px rgba(255,217,122,0.2);
+  animation: gfloat 3.4s ease-in-out infinite; }
+#music-pill .eq { display: flex; align-items: flex-end; gap: 2.5px; height: 13px; }
+#music-pill .eq span { width: 3px; background: var(--accent-2); border-radius: 1.5px;
+  animation: eqbounce 0.9s ease-in-out infinite; }
+#music-pill .eq span:nth-child(2) { animation-delay: 0.15s; }
+#music-pill .eq span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes eqbounce { 0%,100% { height: 4px; } 50% { height: 13px; } }
+#music-pill.hidden { opacity: 0 !important; visibility: hidden !important; }
