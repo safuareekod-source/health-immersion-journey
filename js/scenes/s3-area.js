@@ -96,7 +96,7 @@ const S3 = (() => {
         run: () => {
           const tl = gsap.timeline();
           if (W.ready) {
-            Fellow.place(-2.5, 0, -96, 0.4, false);
+            Fellow.place(-2.5, 0, -96, Math.PI - 0.25, false);
             Fellow.pose("stand");
             W.fly(tl, [-6.5, 4.5, -90], [-2.0, 1.5, -100], 2.8);
             W.drawPathToZ(-118, 1.6);

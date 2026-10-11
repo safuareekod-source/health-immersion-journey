@@ -46,6 +46,8 @@ const Sfx = (() => {
   /* Satie — Gymnopédie No.1 (piano, Kevin MacLeod, freely licensed via
      Wikimedia Commons) — loops softly on the welcome page. */
   let musicAudio = null;
+  let musicWanted = true;    /* default: music ON from site load */
+  function setWanted(v) { musicWanted = v; }
 
   function ensureMusicAudio() {
     if (musicAudio) return musicAudio;
@@ -58,6 +60,7 @@ const Sfx = (() => {
 
   function musicStart() {
     if (muted) return;
+    musicWanted = true;
     const a = ensureMusicAudio();
     if (ctx && ctx.state === "suspended") ctx.resume();
     a.volume = 0;
@@ -72,7 +75,8 @@ const Sfx = (() => {
     });
   }
 
-  function musicStop(fade) {
+  function musicStop(fade, fromUser) {
+    if (fromUser) musicWanted = false;    /* icon off — stay off until re-enabled */
     if (!musicAudio || musicAudio.paused) return;
     const d = (fade === undefined ? 1.2 : fade) * 1000;
     const steps = 12, each = a0 => {
@@ -277,6 +281,8 @@ const Sfx = (() => {
   function isMuted() { return muted; }
 
   return { unlock, whoosh, paper, ink, thud, stamp, pop, chime, birds, rainStart, rainStop, slap: paper, toggleMute, isMuted, musicStart, musicStop, begin, celebrate,
-    get musicPlaying() { return !!musicAudio && !musicAudio.paused && !musicAudio.ended && musicAudio.volume > 0.02; } };
+    get musicPlaying() { return !!musicAudio && !musicAudio.paused && !musicAudio.ended && musicAudio.volume > 0.02; },
+    get musicWanted() { return musicWanted; },
+    setMusicWanted(v) { musicWanted = v; } };
 })();
 window.Sfx = Sfx;

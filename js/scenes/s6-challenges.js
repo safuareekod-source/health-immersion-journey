@@ -51,7 +51,7 @@ const S6 = (() => {
             Sfx.whoosh();
             W.setMood("cool", 2.4);
             Fellow.pose("walk");
-            Fellow.place(-0.8, 0, -256, 0.25, false);
+            Fellow.place(-0.8, 0, -256, Math.PI - 0.15, false);
             W.fly(tl, [2.5, 5.0, -252], [0, 1.0, -270], 3.2);
             W.drawPathToZ(-296, 2.8);
           }
@@ -83,7 +83,7 @@ const S6 = (() => {
             Sfx.chime();
             W.setMood("dawn", 4.0);
             Fellow.pose("stand");
-            Fellow.place(0.6, 0, -314, -0.4, false);
+            Fellow.place(0.6, 0, -314, Math.PI + 0.25, false);
             gsap.to(W.sunDisc.material, { opacity: 0.95, duration: 3.0, delay: 0.8 });
             gsap.to(W.sunDisc.position, { y: 7.5, duration: 4.5, ease: "power1.out", delay: 0.6 });
             sproutArr.forEach((s, i) => {

@@ -56,8 +56,6 @@
     /* hint removed — nothing to toggle */
     const hint = document.getElementById("hint");
     if (hint) { if (idx <= 1) hint.classList.remove("hidden"); else hint.classList.add("hidden"); }
-    /* hero music only lives on the hero page */
-    if (idx > 1) Sfx.musicStop(1.0);
   }
 
   /* ---------- boot ---------- */
@@ -83,11 +81,18 @@
     if (mt) {
       mt.addEventListener("click", () => {
         Sfx.unlock();
-        if (Sfx.musicPlaying) Sfx.musicStop(0.4);
-        else Sfx.musicStart();
+        if (Sfx.musicPlaying) { Sfx.musicStop(0.4, true); }
+        else { Sfx.setMusicWanted(true); Sfx.musicStart(); }
       });
       setInterval(() => mt.classList.toggle("playing", Sfx.musicPlaying), 350);
     }
+    /* music is DEFAULT-ON: the browser may block it before the first gesture,
+       so the first click / key / touch of any kind turns it on */
+    ["pointerdown", "keydown", "touchend"].forEach(ev => {
+      window.addEventListener(ev, () => {
+        if (Sfx.musicWanted && !Sfx.musicPlaying && !Sfx.isMuted()) Sfx.musicStart();
+      }, { passive: true });
+    });
     if (!World.fallback) {
       /* images for textures load async inside scenes; start loop now */
     }

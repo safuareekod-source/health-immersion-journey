@@ -68,7 +68,7 @@ const S4 = (() => {
             popVillage(tl);
             W.fly(tl, [2.5, 6.5, -136], [0, 1.2, -154], 3.4);
             Fellow.pose("walk");
-            Fellow.place(-1.5, 0, -142, 0.35, false);
+            Fellow.place(-1.5, 0, -142, Math.PI + 0.15, false);
           }
           tl.add(() => {
             Overlay.show(Overlay.T.actionsAll(C), { pos: "pos-wide" });
@@ -86,7 +86,7 @@ const S4 = (() => {
           if (W.ready) {
             Sfx.chime();
             Fellow.pose("stand");
-            Fellow.place(-1.0, 0, -158, 0.2, false);
+            Fellow.place(-1.0, 0, -158, Math.PI - 0.1, false);
             W.fly(tl, [0, 7.5, -150], [0, 1.0, -162], 2.8);
             people.forEach((p, i) => {
               gsap.to(p.g.scale, { x: 1, y: 1, z: 1, duration: 0.6, ease: "back.out(2)", delay: 1.2 + i * 0.18 });

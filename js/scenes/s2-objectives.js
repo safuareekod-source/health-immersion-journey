@@ -40,7 +40,7 @@ const S2 = (() => {
             W.setMood("travel");
             W.drawPathToZ(-70, 3.2);
             Fellow.pose("walk");
-            Fellow.place(1.5, 0, -8.0, 0.2, false);
+            Fellow.place(1.5, 0, -8.0, Math.PI - 0.15, false);
             W.fly(tl, [4.5, 5.2, -8.0], [0, 1.0, -26], 3.2, "power1.inOut");
             signs.forEach((sgn, i) => {
               tl.to(sgn.scale, { x: 1, y: 1, z: 1, duration: 0.7, ease: "back.out(2)" }, 1.0 + i * 0.3);
@@ -61,7 +61,7 @@ const S2 = (() => {
         run: () => {
           const tl = gsap.timeline();
           if (W.ready) {
-            Fellow.place(1.0, 0, -56.0, 0.1, false);
+            Fellow.place(1.0, 0, -56.0, Math.PI - 0.1, false);
             W.fly(tl, [3.0, 6.0, -52.0], [0, 0.8, -72.0], 2.6);
             Sfx.whoosh();
           }

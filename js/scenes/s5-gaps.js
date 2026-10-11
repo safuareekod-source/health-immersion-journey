@@ -32,7 +32,7 @@ const S5 = (() => {
             W.setMood("cool");
             W.fly(tl, [2.0, 5.5, -184], [0, 0.6, -210], 3.2);
             Fellow.pose("walk");
-            Fellow.place(-1.8, 0, -188, 0.3, false);
+            Fellow.place(-1.8, 0, -188, Math.PI - 0.2, false);
             W.drawPathToZ(-240, 3.4);
           }
           tl.add(() => {
@@ -50,7 +50,7 @@ const S5 = (() => {
         run: () => {
           const tl = gsap.timeline();
           if (W.ready) {
-            Fellow.place(1.5, 0, -232, 0.0, false);
+            Fellow.place(1.5, 0, -232, Math.PI, false);
             W.fly(tl, [3.0, 6.0, -232], [0, 0.8, -252], 2.6);
             Sfx.whoosh();
           }

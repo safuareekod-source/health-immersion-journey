@@ -70,7 +70,7 @@ const S7 = (() => {
             gsap.to(W.fireflies.material, { opacity: 0.5, duration: 2.0, delay: 1.6 });
             W.fireflies.visible = true;
             Fellow.pose("stand");
-            Fellow.place(-1.2, 0, -388, 0.3, false);
+            Fellow.place(-1.2, 0, -388, Math.PI - 0.1, false);
             W.fly(tl, [2.0, 4.0, -382], [0, 2.0, -396], 3.4);
           }
           tl.add(() => {
@@ -139,6 +139,7 @@ const S7 = (() => {
           const tl = gsap.timeline();
           if (W.ready) {
             Fellow.showGlasses(true);
+            Fellow.place(-1.2, 0, -388, 0.15, false);   /* face the viewers here */
             W.drawPathToZ(-440, 3.0);
             W.fly(tl, [0, 8.5, -376], [0, 2.0, -420], 4.5, "power1.inOut");
             tl.add(() => Sfx.chime(), 2.2);
