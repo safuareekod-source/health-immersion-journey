@@ -78,6 +78,16 @@
     /* Piramal watermark from embedded assets */
     const wm = document.getElementById("watermark");
     if (wm && window.FIELD_IMG && window.FIELD_IMG.logo) wm.src = window.FIELD_IMG.logo;
+    /* music on/off icon (top-left) — reflects + controls the intro music */
+    const mt = document.getElementById("music-toggle");
+    if (mt) {
+      mt.addEventListener("click", () => {
+        Sfx.unlock();
+        if (Sfx.musicPlaying) Sfx.musicStop(0.4);
+        else Sfx.musicStart();
+      });
+      setInterval(() => mt.classList.toggle("playing", Sfx.musicPlaying), 350);
+    }
     if (!World.fallback) {
       /* images for textures load async inside scenes; start loop now */
     }

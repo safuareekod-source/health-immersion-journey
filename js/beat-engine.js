@@ -108,7 +108,11 @@ const BeatEngine = (() => {
       touchTarget.closest("button, a, #progress-svg, #music-pill");
     if (!onControl) {
       if (Math.abs(dy) > 46) { dy > 0 ? next() : prev(); }
-      else if (dt < 350 && Math.abs(dy) < 24) { next(); }
+      else if (dt < 350 && Math.abs(dy) < 24) {
+        /* tap zones: right half = forward, left half = backward */
+        const tx = e.changedTouches[0].clientX;
+        tx > window.innerWidth / 2 ? next() : prev();
+      }
     }
     touchY = null;
   }

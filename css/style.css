@@ -439,20 +439,22 @@ body.fallback[data-scene="s7"] {
 .panel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 4px; }
 .panel::-webkit-scrollbar-track { background: transparent; }
 
-/* ---------- music pill (hero page) ---------- */
-#music-pill { position: fixed; left: 30px; bottom: 96px; z-index: 6;
-  display: flex; align-items: center; gap: 9px; cursor: pointer;
-  font-family: var(--font-head); font-size: 14.5px; font-weight: 700; color: var(--ink);
+/* ---------- music toggle (top-left) ---------- */
+#music-toggle { position: fixed; top: 16px; left: 16px; z-index: 6;
+  width: 46px; height: 46px; border-radius: 50%; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
   background: rgba(255,255,255,0.10);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,217,122,0.5);
-  padding: 9px 18px; border-radius: 999px;
-  box-shadow: 0 8px 24px rgba(3,10,7,0.45), 0 0 22px rgba(255,217,122,0.2);
-  animation: gfloat 3.4s ease-in-out infinite; }
-#music-pill .eq { display: flex; align-items: flex-end; gap: 2.5px; height: 13px; }
-#music-pill .eq span { width: 3px; background: var(--accent-2); border-radius: 1.5px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 24px rgba(3,10,7,0.45);
+  transition: border-color 0.3s, box-shadow 0.3s; }
+#music-toggle .eq { display: flex; align-items: flex-end; gap: 3px; height: 15px; }
+#music-toggle .eq span { width: 3.5px; height: 4px; border-radius: 2px;
+  background: rgba(255,255,255,0.45); transition: background 0.3s; }
+#music-toggle.playing { border-color: rgba(61,255,168,0.55);
+  box-shadow: 0 8px 24px rgba(3,10,7,0.45), 0 0 22px rgba(61,255,168,0.3); }
+#music-toggle.playing .eq span { background: var(--accent-2);
   animation: eqbounce 0.9s ease-in-out infinite; }
-#music-pill .eq span:nth-child(2) { animation-delay: 0.15s; }
-#music-pill .eq span:nth-child(3) { animation-delay: 0.3s; }
-@keyframes eqbounce { 0%,100% { height: 4px; } 50% { height: 13px; } }
-#music-pill.hidden { opacity: 0 !important; visibility: hidden !important; }
+#music-toggle.playing .eq span:nth-child(2) { animation-delay: 0.15s; }
+#music-toggle.playing .eq span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes eqbounce { 0%,100% { height: 4px; } 50% { height: 15px; } }
