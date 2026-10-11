@@ -7,7 +7,7 @@
    ============================================================ */
 const Sfx = (() => {
   let ctx = null, master = null, sfxBus = null, muted = false;
-  let musicBus = null, musicTimer = null;
+  
 
   function ensure() {
     if (ctx) return true;
@@ -19,7 +19,6 @@ const Sfx = (() => {
       master.connect(ctx.destination);
       /* ambient SFX run quieter than the reveal moment */
       sfxBus = ctx.createGain(); sfxBus.gain.value = 0.4; sfxBus.connect(master);
-      musicBus = ctx.createGain(); musicBus.gain.value = 0; musicBus.connect(master);
     } catch (e) { return false; }
     return true;
   }
@@ -43,57 +42,54 @@ const Sfx = (() => {
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + a + d);
   }
 
-  /* ---------- hero music: slow warm low pad + sparse soft bells ---------- */
-  /* low, slow, warm — a quiet evening hum, not a jingle */
-  const PAD = [98.00, 146.83, 196.00, 293.66];    /* G2 D3 G3 D4 — low & warm */
-  const BELLS = [392.00, 493.88, 587.33];         /* G4 B4 D5 — sparse, soft */
+  /* ---------- intro music: legendary piano, real recording ---------- */
+  /* Satie — Gymnopédie No.1 (piano, Kevin MacLeod, freely licensed via
+     Wikimedia Commons) — loops softly on the welcome page. */
+  let musicAudio = null;
 
-  function padVoice(freq, t0, dur) {
-    const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freq;
-    const o2 = ctx.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq * 1.003;  /* slow warmth */
-    const g = ctx.createGain();
-    g.gain.setValueAtTime(0.0001, t0);
-    g.gain.linearRampToValueAtTime(0.045, t0 + dur * 0.45);
-    g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
-    const g2 = ctx.createGain(); g2.gain.value = 0.16;
-    o.connect(g); o2.connect(g2).connect(g);
-    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900;
-    g.connect(lp).connect(musicBus);
-    o.start(t0); o2.start(t0);
-    o.stop(t0 + dur + 0.1); o2.stop(t0 + dur + 0.1);
-  }
-
-  function bellNote(freq, t0) {
-    const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freq;
-    const g = ctx.createGain(); env(g, t0, 0.03, 0.02, 2.2);
-    o.connect(g).connect(musicBus);
-    o.start(t0); o.stop(t0 + 2.3);
+  function ensureMusicAudio() {
+    if (musicAudio) return musicAudio;
+    musicAudio = new Audio("audio/intro.ogg");
+    musicAudio.loop = true;
+    musicAudio.volume = 0;                     /* fade in */
+    musicAudio.preload = "auto";
+    return musicAudio;
   }
 
   function musicStart() {
-    if (!ensure() || muted || musicTimer) return;
-    if (ctx.state === "suspended") ctx.resume();
-    musicBus.gain.cancelScheduledValues(ctx.currentTime);
-    musicBus.gain.setValueAtTime(0.0001, ctx.currentTime);
-    musicBus.gain.linearRampToValueAtTime(window.THEME.audio.music || 0.22, ctx.currentTime + 3.0);
-    const step = 5.2;   /* one slow warm chord breathing every 5.2s */
-    const tick = () => {
-      const t0 = ctx.currentTime + 0.05;
-      PAD.forEach((f, i) => padVoice(f, t0 + i * 0.12, step * 1.2));
-      if (Math.random() > 0.35) bellNote(BELLS[Math.floor(Math.random() * BELLS.length)], t0 + 1.4 + Math.random() * 2.2);
-    };
-    tick();
-    musicTimer = setInterval(tick, step * 1000);
+    if (muted) return;
+    const a = ensureMusicAudio();
+    if (ctx && ctx.state === "suspended") ctx.resume();
+    a.volume = 0;
+    const target = window.THEME.audio.music || 0.5;
+    const fade = setInterval(() => {
+      if (a.paused) { clearInterval(fade); return; }
+      a.volume = Math.min(target, a.volume + 0.04);
+      if (a.volume >= target) clearInterval(fade);
+    }, 90);
+    a.play().catch(() => {   /* autoplay blocked — the music pill handles it */
+      clearInterval(fade);
+    });
   }
 
   function musicStop(fade) {
-    if (musicTimer) { clearInterval(musicTimer); musicTimer = null; }
-    if (!musicBus) return;
-    const t0 = ctx.currentTime;
-    const d = fade === undefined ? 1.4 : fade;
-    musicBus.gain.cancelScheduledValues(t0);
-    musicBus.gain.setValueAtTime(musicBus.gain.value, t0);
-    musicBus.gain.linearRampToValueAtTime(0.0001, t0 + d);
+    if (!musicAudio || musicAudio.paused) return;
+    const d = (fade === undefined ? 1.2 : fade) * 1000;
+    const steps = 12, each = a0 => {
+      const v = musicAudio.volume;
+      let i = 0;
+      const iv = setInterval(() => {
+        i++;
+        musicAudio.volume = Math.max(0, v - (v * i) / steps);
+        if (i >= steps) {
+          clearInterval(iv);
+          musicAudio.pause();
+          musicAudio.currentTime = 0;
+          musicAudio.volume = window.THEME.audio.music || 0.5;
+        }
+      }, d / steps);
+    };
+    each();
   }
 
   /* ---------- the Begin reveal: deep swell + rising arp + shimmer ---------- */
@@ -281,6 +277,6 @@ const Sfx = (() => {
   function isMuted() { return muted; }
 
   return { unlock, whoosh, paper, ink, thud, stamp, pop, chime, birds, rainStart, rainStop, slap: paper, toggleMute, isMuted, musicStart, musicStop, begin, celebrate,
-    get musicPlaying() { return !!musicTimer && !!ctx && ctx.state === "running"; } };
+    get musicPlaying() { return !!musicAudio && !musicAudio.paused && !musicAudio.ended && musicAudio.volume > 0.02; } };
 })();
 window.Sfx = Sfx;

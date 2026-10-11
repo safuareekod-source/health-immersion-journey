@@ -24,6 +24,6 @@ window.THEME = {
     night:   { bg: 0x54452A, fog: 0x5E4E30, sun: 0xE8CE96, sunI: 0.5,  hemiI: 0.48, fogNear: 28, fogFar: 115 }
   },
   speed: { flight: 3.0, panel: 0.9 },   /* seconds */
-  audio: { master: 0.9, music: 0.22 },  /* gentle hero music */
+  audio: { master: 0.9, music: 0.55 },  /* legendary piano intro — audible */
   debug: { fallback: /fallback=1/.test(location.search) }
 };

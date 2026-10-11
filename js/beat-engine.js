@@ -90,22 +90,26 @@ const BeatEngine = (() => {
     if (e) history.replaceState(null, "", "#s" + (e.sceneIdx + 1) + "b" + (e.beatIdx + 1));
   }
 
-  /* ---------- input ---------- */
-  let wheelLock = 0;
-  function onWheel(e) {
-    const now = Date.now();
-    if (now - wheelLock < 380) return;
-    wheelLock = now;
-    if (e.deltaY > 6) next();
-    else if (e.deltaY < -6) prev();
+  /* ---------- input ----------
+     wheel removed (his request). Arrows / Space / PageUp-Down / 1-7 keys,
+     touch swipe, and a plain TAP anywhere = next (mobile). */
+  let touchY = null, touchT = 0, touchTarget = null;
+  function onTouchStart(e) {
+    touchY = e.touches[0].clientY;
+    touchT = Date.now();
+    touchTarget = e.target;
   }
-
-  let touchY = null;
-  function onTouchStart(e) { touchY = e.touches[0].clientY; }
   function onTouchEnd(e) {
     if (touchY === null) return;
     const dy = touchY - e.changedTouches[0].clientY;
-    if (Math.abs(dy) > 46) { dy > 0 ? next() : prev(); }
+    const dt = Date.now() - touchT;
+    /* never hijack taps on real controls */
+    const onControl = touchTarget && touchTarget.closest &&
+      touchTarget.closest("button, a, #progress-svg, #music-pill");
+    if (!onControl) {
+      if (Math.abs(dy) > 46) { dy > 0 ? next() : prev(); }
+      else if (dt < 350 && Math.abs(dy) < 24) { next(); }
+    }
     touchY = null;
   }
 
@@ -129,7 +133,6 @@ const BeatEngine = (() => {
   }
 
   function bindInputs() {
-    window.addEventListener("wheel", onWheel, { passive: true });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchend", onTouchEnd, { passive: true });
     window.addEventListener("keydown", onKey);
