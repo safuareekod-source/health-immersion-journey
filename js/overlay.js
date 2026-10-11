@@ -178,15 +178,17 @@ const Overlay = (() => {
 
   T.gapsAll = (c) => {
     const cards = c.gaps.map((g, i) =>
-      '<div class="gcard item ir"><div class="gap-top"><span class="gnum">' + (i + 1) + '</span>' +
+      '<div class="gcard item ir' + (g.highlight ? " hl-gap" : "") + '">' +
+      '<div class="gap-top"><span class="gnum' + (g.highlight ? " gold" : "") + '">' + (i + 1) + '</span>' +
       '<span class="gobs">' + g.observed + '</span></div>' +
-      '<div class="gact">→ ' + g.action + "</div></div>").join("");
-    const edge = c.gapsEdge ? '<div class="gcard edge-card ir"><div class="edge-t">✦ ' + c.gapsEdge.title + '</div><div class="edge-d">' + c.gapsEdge.text + "</div></div>" : "";
-    return '<div class="cards head-row"><div class="gcard featured"><div class="kicker ir">Stop 4 · Gaps & Actions</div><h2 class="ir">' + c.gapsIntro + "</h2></div></div>" +
+      '<div class="gact">→ ' + g.action + "</div>" +
+      (g.footer ? '<div class="gap-foot ir">(' + g.footer + ")</div>" : "") +
+      "</div>").join("");
+    return '<div class="cards head-row"><div class="gcard featured"><div class="kicker ir">Stop 4 · Gaps & Actions</div><h2 class="ir">' + c.gapsIntro + "</h2>" +
+      '<div class="muted ir">' + (c.gapsSub || "") + "</div></div></div>" +
       '<div class="items c3">' + cards + "</div>" +
       '<div class="gcard wayf-card"><div class="wayf ir"><div class="wlab">Planned next</div>' +
-        c.wayForward.map(w => '<div class="wi">' + w + "</div>").join("") + "</div></div>" +
-      edge;
+        c.wayForward.map(w => '<div class="wi">' + w + "</div>").join("") + "</div></div>";
   };
 
   T.challengesAll = (c) => {

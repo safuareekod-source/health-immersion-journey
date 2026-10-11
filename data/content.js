@@ -86,13 +86,16 @@ window.JOURNEY_CONTENT = {
   ],
 
   gapsIntro: "Cracks I saw on the path — and how I helped repair them.",
+  gapsSub: "Coming from Kerala, South India, I bring technical ability with me — so some of these cracks were ones I could directly repair.",
   gaps: [
     { observed: "Low motivation",
       action: "Counselling & advocacy with follow-up — seen across areas & stakeholders" },
     { observed: "HRP & SAM not documented",
       action: "Awareness on why documentation matters" },
     { observed: "Digital entry problems",
-      action: "Troubleshooting support; reported failures" },
+      action: "Troubleshooting support; reported failures",
+      highlight: true,
+      footer: "I have an IT background" },
     { observed: "Equipment & supply gaps",
       action: "Documented & escalated during visits" },
     { observed: "Low community demand",
@@ -102,10 +105,6 @@ window.JOURNEY_CONTENT = {
     "<b>Digital-entry training</b> for FLWs — with the Govt. / state team",
     "<b>Public awareness programme</b> in the highest-HRP area"
   ],
-  gapsEdge: {
-    title: "Digital entry problems — my edge",
-    text: "Coming from Kerala, South India, technical ability around apps and data entry comes naturally to me — so digital-entry problems were something I could directly own and support."
-  },
 
   challenges: [
     { title: "Language",       detail: "records were in Hindi — I could not read them" },

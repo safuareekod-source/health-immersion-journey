@@ -1,20 +1,18 @@
 /* ============================================================
-   s1-hero.js — S1 ORIGIN: Kerala riverbank at night, bench,
-   ONE hero glass card (name + details + Begin Journey button).
-   Gentle pad music plays on the hero page (starts on first
-   gesture — browser autoplay policy) and stops when the
-   journey begins, with a cinematic reveal + swell SFX.
+   s1-hero.js — S1 ORIGIN: Kerala riverbank, bench, ONE hero
+   glass card (name + details + Begin Journey button).
+   NO music at the start — the page is silent until the button;
+   pressing it stops any music and plays the cinematic reveal.
    ============================================================ */
 const S1 = (() => {
   const W = window.World, C = window.JOURNEY_CONTENT;
   let built = false, started = false, startBtnEl = null;
   let bench, sign;
-  let musicArmed = false;
 
   function build() {
     if (built || W.fallback) return;
     built = true;
-    /* Kerala props — night garden */
+    /* Kerala props */
     W.palm(4.4, -5.5, 1.25); W.palm(-7.8, -9.5, 1.5); W.palm(6.8, -16.5, 1.1);
     W.palm(-6.4, -19.0, 1.3); W.palm(9.5, -23.0, 1.0);
     W.tree(-10.5, -2.5, 1.1, false); W.tree(9.8, -11.5, 0.9, false);
@@ -26,21 +24,6 @@ const S1 = (() => {
     bench = W.bench(1.25, -2.35, 0.55);
     sign = W.signpost(-3.2, -5.6, W.textTexture(["Kerala", "→ Ramgarh, Dumka"], { w: 512, h: 256, bigSize: 88 }), 0.72, 1.0);
     sign.scale.setScalar(1);   /* static prop — survives forward/back navigation */
-  }
-
-  /* music can only start on a user gesture (autoplay policy):
-     arm it on the first pointer/key interaction of the session */
-  function armMusic() {
-    if (musicArmed) return;
-    musicArmed = true;
-    const go = () => {
-      Sfx.unlock();
-      if (!started) Sfx.musicStart();
-      window.removeEventListener("pointerdown", go);
-      window.removeEventListener("keydown", go);
-    };
-    window.addEventListener("pointerdown", go);
-    window.addEventListener("keydown", go);
   }
 
   function beats() {
@@ -58,7 +41,6 @@ const S1 = (() => {
             Fellow.pose("sit");
             W.fly(tl, [7.5, 4.2, 6.5], [0.8, 1.2, -2.5], 3.2);
           }
-          armMusic();
           tl.add(() => {
             const el = Overlay.show(Overlay.T.hero(C), { pos: "pos-hero" });
             startBtnEl = el.querySelector("#start-btn");
@@ -102,26 +84,20 @@ const S1 = (() => {
     ];
   }
 
-  /* the reveal: music stops, world blooms, camera soars, path ignites */
+  /* the reveal: any music is stopped, world blooms, camera soars, path ignites */
   function onStart() {
     if (started) return;
     started = true;
     Sfx.unlock();
-    Sfx.musicStop(1.2);
+    Sfx.musicStop(0.8);
     Sfx.begin();
     if (!W.fallback) {
       const tl = gsap.timeline();
-      /* pull the camera up & back to reveal the whole night world */
+      /* pull the camera up & back to reveal the whole world */
       W.fly(tl, [8.5, 9.5, 12.5], [0, 1.0, -60], 2.6, "power2.inOut");
       tl.to(W.rig.look, { z: -90, duration: 1.6, ease: "power1.inOut" }, 1.4);
       /* the path ignites far ahead */
       tl.add(() => W.drawPathToZ(-120, 2.2), 0.5);
-      /* gentle bloom: hemi lifts briefly */
-      tl.add(() => {
-        const d = document.getElementById("vignette");
-        gsap.fromTo(d, { opacity: 1 },
-          { opacity: 1, duration: 0.1, onComplete: () => {} });
-      }, 0);
       /* settle back to the Fellow */
       W.fly(tl, [5.2, 3.4, 4.6], [0.6, 1.3, -4.0], 1.6, "power1.inOut");
       tl.to({}, { duration: 0.2 });

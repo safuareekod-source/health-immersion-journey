@@ -212,16 +212,18 @@ const World = (() => {
     return m;
   }
 
-  /* birds — little V-pairs circling overhead */
+  /* birds — V-pairs circling overhead; size varies per bird */
   function addBirds(cx, cz, r, h, n) {
     for (let i = 0; i < (n || 3); i++) {
       const g = new THREE.Group();
       const mat = new THREE.MeshBasicMaterial({ color: 0xBFDCC8 });
-      const b1 = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.5, 3), mat);
+      const s = 0.10 + Math.random() * 0.06;      /* bigger, varied wingspan */
+      const b1 = new THREE.Mesh(new THREE.ConeGeometry(s, s * 6, 3), mat);
       b1.rotation.z = Math.PI / 2.4;
-      const b2 = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.5, 3), mat);
+      const b2 = new THREE.Mesh(new THREE.ConeGeometry(s, s * 6, 3), mat);
       b2.rotation.z = -Math.PI / 2.4;
       g.add(b1, b2);
+      g.scale.setScalar(1.25 + Math.random() * 0.5);
       scene.add(g);
       birds.push({ o: g, cx, cz, r: r + i * 1.4, h: h + i * 0.8, sp: 0.22 + Math.random() * 0.12, ph: Math.random() * 6.28 });
     }
@@ -675,15 +677,22 @@ const World = (() => {
     fireflies.material.opacity = 0; fireflies.visible = false;
 
     /* bird flocks along the ENTIRE journey — always something alive overhead */
-    addBirds(-6, -30, 14, 12, 3);
-    addBirds(9, -80, 13, 13, 2);
-    addBirds(-8, -130, 15, 12, 2);
-    addBirds(7, -180, 14, 13, 3);
-    addBirds(-5, -230, 13, 12, 2);
-    addBirds(8, -280, 15, 13, 2);
-    addBirds(-7, -330, 14, 12, 2);
+    addBirds(-6, -25, 13, 12, 3);
+    addBirds(9, -55, 12, 13, 2);
+    addBirds(-9, -80, 13, 13, 3);
+    addBirds(6, -105, 14, 12, 2);
+    addBirds(-8, -130, 15, 13, 3);
+    addBirds(9, -155, 13, 12, 2);
+    addBirds(-7, -180, 14, 13, 3);
+    addBirds(5, -205, 13, 12, 2);
+    addBirds(-5, -230, 13, 13, 3);
+    addBirds(8, -255, 15, 12, 2);
+    addBirds(-8, -280, 15, 13, 2);
+    addBirds(6, -305, 14, 12, 3);
+    addBirds(-7, -330, 14, 13, 2);
+    addBirds(8, -355, 13, 12, 2);
     addBirds(6, -380, 13, 13, 3);
-    addBirds(-3, -425, 14, 12, 2);
+    addBirds(-3, -425, 14, 12, 3);
 
     setMood("kerala", 0.01);
     window.addEventListener("resize", onResize);
