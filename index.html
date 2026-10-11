@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Fellow's Sketchbook — Health System Immersion</title>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-scene="s1">
+
+<!-- preloader -->
+<div id="preloader">
+  <div class="pre-inner">
+    <div class="pre-title">The Fellow's Sketchbook</div>
+    <div class="pre-sub">a journey in ink — Kerala → Ramgarh, Dumka</div>
+    <div class="pre-track"><div class="pre-fill" id="pre-fill"></div><div class="pre-pencil">&#9998;</div></div>
+    <div class="pre-pct" id="pre-pct">0%</div>
+    <div class="pre-note">best experienced with sound on</div>
+  </div>
+</div>
+
+<!-- 3D stage -->
+<div id="stage"></div>
+<div id="vignette"></div>
+
+<!-- DOM overlay for panels -->
+<div id="ui"></div>
+
+<!-- journey progress -->
+<div id="progress-wrap">
+  <svg id="progress-svg" viewBox="0 0 760 74" preserveAspectRatio="xMidYMid meet"></svg>
+  <div id="progress-label"></div>
+</div>
+
+<!-- hint / mute / debug -->
+<button id="mute" title="Mute (M)">&#9834;</button>
+<div id="beat-debug" class="hidden"></div>
+
+<!-- Piramal Foundation watermark -->
+<img id="watermark" alt="Piramal Foundation">
+
+<script src="lib/three.min.js"></script>
+<script src="lib/gsap.min.js"></script>
+<script src="data/theme.js"></script>
+<script src="data/content.js"></script>
+<script src="data/imgdata.js"></script>
+<script src="js/audio-engine.js"></script>
+<script src="js/world.js"></script>
+<script src="js/character.js"></script>
+<script src="js/overlay.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/scenes/s1-hero.js"></script>
+<script src="js/scenes/s2-objectives.js"></script>
+<script src="js/scenes/s3-area.js"></script>
+<script src="js/scenes/s4-actions.js"></script>
+<script src="js/scenes/s5-gaps.js"></script>
+<script src="js/scenes/s6-challenges.js"></script>
+<script src="js/scenes/s7-credits.js"></script>
+<script src="js/beat-engine.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
