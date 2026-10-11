@@ -194,6 +194,16 @@ body.fallback[data-scene="s7"] {
 .item .gact { font-size: 15.5px; font-weight: 600; color: var(--accent); margin-top: 8px; }
 .wayf-card { padding: 14px 24px 14px; }
 
+/* the Kerala / South-India technical edge highlight */
+.edge-card {
+  border: 1px solid rgba(255,217,122,0.45);
+  background: linear-gradient(150deg, rgba(255,217,122,0.16), rgba(255,217,122,0.06));
+  box-shadow: 0 16px 44px rgba(3,10,7,0.5), 0 0 44px rgba(255,217,122,0.18), inset 0 1px 0 rgba(255,255,255,0.30);
+  padding: 16px 24px 15px;
+}
+.edge-t { font-size: 19px; font-weight: 800; color: var(--accent-2); letter-spacing: 0.3px; }
+.edge-d { font-size: 16px; font-weight: 600; color: var(--ink-soft); margin-top: 5px; line-height: 1.45; }
+
 /* ---------- begin journey button ---------- */
 .start-btn {
   pointer-events: auto; cursor: pointer; margin-top: 18px;

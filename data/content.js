@@ -53,33 +53,31 @@ window.JOURNEY_CONTENT = {
   actions: {
     facilities: { title: "Facilities", items: [
       "<b>CHC Ramgarh</b> — labour room, lab, cold chain",
-      "<b>3 AAM Centres</b> — Moharia, Lakhanpur, Khairbani",
-      "<b>9 Anganwadi Centres</b>"
+      "<b>AAM Centres</b> — Moharia, Lakhanpur, Khairbani",
+      "<b>PHCs</b> — primary health centres",
+      "<b>Anganwadi Centres</b>"
     ]},
     programs: { title: "Programmes", items: [
       "<b>VHSND & RI sessions</b>",
       "<b>PMSMA</b> — ANC clinic day",
-      "<b>ANC / PNC</b> contacts",
       "<b>NQAS</b> observation at Mohariya"
     ]},
     forums: { title: "Forums", items: [
-      "<b>Sahiya Cluster Meeting</b> — Lakenpur",
-      "<b>JAS & Sector Meetings</b>",
-      "<b>Aam Sabha</b> — Dhoba (JSLPS)",
-      "<b>Block · ICDS · JSLPS</b>"
-    ]},
-    jan: { title: "Jan Andolan", items: [
-      "<b>SHG initiatives</b> seen at Aam Sabha",
-      "<b>NQAS welcome</b> — with villagers & Sahiyas",
-      "<b>HRB counselling</b> — breastfeeding, hygiene",
-      "<b>Household MNCH counselling</b>"
+      "<b>Sahiya Sathi meeting</b>",
+      "<b>Sahiya cluster meeting</b>",
+      "<b>JSLPS CLF meeting</b>",
+      "<b>ANM monthly meeting</b>",
+      "<b>Sevika cluster meeting</b>",
+      "<b>Annual Aam Sabha</b> — JSLPS",
+      "<b>JAS meeting</b>",
+      "<b>Gram Sabha</b>"
     ]}
   },
 
   stakeholders: [
     { head: "Community",        items: ["Pregnant women", "Lactating mothers", "Children & families", "Mukhiya & leaders"] },
-    { head: "Frontline workers", items: ["Sahiya & Sathi", "ANM", "AWW / Sevika", "Poshan Sakhi"] },
-    { head: "Facility & block",  items: ["CHO & CCH", "BPM · BDM · BTT", "MOIC", "ICDS & JSLPS"] }
+    { head: "Frontline workers", items: ["Sahiya & Sathi", "ANM", "Sevika & Sahayika", "Poshan Sakhi"] },
+    { head: "Facility & block",  items: ["CHO & CCH", "BPM · BDM · BTT", "MO · MOIC", "CDPO · BDO · NHM-BC", "JSLPS — BPO · DO · CC"] }
   ],
 
   gapsIntro: "Cracks I saw on the path — and how I helped repair them.",
@@ -99,6 +97,10 @@ window.JOURNEY_CONTENT = {
     "<b>Digital-entry training</b> for FLWs — with the Govt. / state team",
     "<b>Public awareness programme</b> in the highest-HRP area"
   ],
+  gapsEdge: {
+    title: "Digital entry problems — my edge",
+    text: "Coming from Kerala, South India, technical ability around apps and data entry comes naturally to me — so digital-entry problems were something I could directly own and support."
+  },
 
   challenges: [
     { title: "Language",       detail: "records were in Hindi — I could not read them" },

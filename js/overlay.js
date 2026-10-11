@@ -121,7 +121,7 @@ const Overlay = (() => {
     const items = c.agenda.map((a, i) =>
       '<div class="ag ir"><span class="n">' + (i + 1) + '</span><span class="t">' + a + "</span></div>").join("");
     return '<div class="cards">' +
-      '<div class="gcard featured"><div class="kicker ir">The road ahead</div><h2 class="ir">Six stops on this journey</h2></div>' +
+      '<div class="gcard featured"><div class="kicker ir">The road ahead</div><h2 class="ir">Six stopages on this journey</h2></div>' +
       '<div class="gcard"><div class="agenda">' + items + "</div></div></div>";
   };
 
@@ -146,13 +146,12 @@ const Overlay = (() => {
       '<div class="gcard featured"><div class="stats stats4">' + cells + "</div></div></div>";
   };
 
-  /* S4 — actions panel (stakeholders have their own stop) */
   T.actionsAll = (c) => {
     const A = c.actions;
     const col = (b) => '<div class="gcard item ir"><div class="col-h">' + b.title + "</div>" +
       b.items.map(i => '<div class="col-i">' + i + "</div>").join("") + "</div>";
     return '<div class="cards head-row"><div class="gcard featured"><div class="kicker ir">Stop 3 · Covered Actions</div><h2 class="ir">Where I went, what I did</h2></div></div>' +
-      '<div class="items c4">' + col(A.facilities) + col(A.programs) + col(A.forums) + col(A.jan) + "</div>";
+      '<div class="items c3">' + col(A.facilities) + col(A.programs) + col(A.forums) + "</div>";
   };
 
   T.stakeholders = (c) => {
@@ -168,10 +167,12 @@ const Overlay = (() => {
       '<div class="gcard item ir"><div class="gap-top"><span class="gnum">' + (i + 1) + '</span>' +
       '<span class="gobs">' + g.observed + '</span></div>' +
       '<div class="gact">→ ' + g.action + "</div></div>").join("");
+    const edge = c.gapsEdge ? '<div class="gcard edge-card ir"><div class="edge-t">✦ ' + c.gapsEdge.title + '</div><div class="edge-d">' + c.gapsEdge.text + "</div></div>" : "";
     return '<div class="cards head-row"><div class="gcard featured"><div class="kicker ir">Stop 4 · Gaps & Actions</div><h2 class="ir">' + c.gapsIntro + "</h2></div></div>" +
       '<div class="items c3">' + cards + "</div>" +
       '<div class="gcard wayf-card"><div class="wayf ir"><div class="wlab">Planned next</div>' +
-        c.wayForward.map(w => '<div class="wi">' + w + "</div>").join("") + "</div></div>";
+        c.wayForward.map(w => '<div class="wi">' + w + "</div>").join("") + "</div></div>" +
+      edge;
   };
 
   T.challengesAll = (c) => {

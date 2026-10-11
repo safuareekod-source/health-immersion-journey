@@ -43,20 +43,21 @@ const Sfx = (() => {
     g.gain.exponentialRampToValueAtTime(0.0001, t0 + a + d);
   }
 
-  /* ---------- hero music: slow warm pad + sparse bell arps ---------- */
-  const PAD = [130.81, 196.00, 261.63, 329.63];   /* C3 G3 C4 E4 */
-  const BELLS = [523.25, 659.25, 783.99, 987.77]; /* C5 E5 G5 B5 */
+  /* ---------- hero music: slow warm low pad + sparse soft bells ---------- */
+  /* low, slow, warm — a quiet evening hum, not a jingle */
+  const PAD = [98.00, 146.83, 196.00, 293.66];    /* G2 D3 G3 D4 — low & warm */
+  const BELLS = [392.00, 493.88, 587.33];         /* G4 B4 D5 — sparse, soft */
 
   function padVoice(freq, t0, dur) {
     const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freq;
-    const o2 = ctx.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq * 2.002;
+    const o2 = ctx.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq * 1.003;  /* slow warmth */
     const g = ctx.createGain();
     g.gain.setValueAtTime(0.0001, t0);
-    g.gain.linearRampToValueAtTime(0.055, t0 + dur * 0.35);
+    g.gain.linearRampToValueAtTime(0.045, t0 + dur * 0.45);
     g.gain.linearRampToValueAtTime(0.0001, t0 + dur);
-    const g2 = ctx.createGain(); g2.gain.value = 0.25;
+    const g2 = ctx.createGain(); g2.gain.value = 0.16;
     o.connect(g); o2.connect(g2).connect(g);
-    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 1200;
+    const lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 900;
     g.connect(lp).connect(musicBus);
     o.start(t0); o2.start(t0);
     o.stop(t0 + dur + 0.1); o2.stop(t0 + dur + 0.1);
@@ -64,9 +65,9 @@ const Sfx = (() => {
 
   function bellNote(freq, t0) {
     const o = ctx.createOscillator(); o.type = "sine"; o.frequency.value = freq;
-    const g = ctx.createGain(); env(g, t0, 0.02, 0.035, 1.6);
+    const g = ctx.createGain(); env(g, t0, 0.03, 0.02, 2.2);
     o.connect(g).connect(musicBus);
-    o.start(t0); o.stop(t0 + 1.7);
+    o.start(t0); o.stop(t0 + 2.3);
   }
 
   function musicStart() {
@@ -74,12 +75,12 @@ const Sfx = (() => {
     if (ctx.state === "suspended") ctx.resume();
     musicBus.gain.cancelScheduledValues(ctx.currentTime);
     musicBus.gain.setValueAtTime(0.0001, ctx.currentTime);
-    musicBus.gain.linearRampToValueAtTime(window.THEME.audio.music || 0.22, ctx.currentTime + 2.2);
-    const step = 3.6;   /* one chord breathing every 3.6s */
+    musicBus.gain.linearRampToValueAtTime(window.THEME.audio.music || 0.22, ctx.currentTime + 3.0);
+    const step = 5.2;   /* one slow warm chord breathing every 5.2s */
     const tick = () => {
       const t0 = ctx.currentTime + 0.05;
-      PAD.forEach((f, i) => padVoice(f, t0 + i * 0.06, step * 1.15));
-      bellNote(BELLS[Math.floor(Math.random() * BELLS.length)], t0 + 0.9 + Math.random() * 1.4);
+      PAD.forEach((f, i) => padVoice(f, t0 + i * 0.12, step * 1.2));
+      if (Math.random() > 0.35) bellNote(BELLS[Math.floor(Math.random() * BELLS.length)], t0 + 1.4 + Math.random() * 2.2);
     };
     tick();
     musicTimer = setInterval(tick, step * 1000);
