@@ -44,9 +44,14 @@ window.JOURNEY_CONTENT = {
       { value: 236, suffix: "",      label: "AWCs" }
     ],
     highlight: {
-      big: "52%",
+      big: "52.6%",
       caption: "of the population is SC / ST",
-      note: "a young, dispersed, predominantly tribal community"
+      note: "Census 2011 — Ramgarh CD block · pop. 1,59,911",
+      pie: [
+        { label: "Scheduled Tribes",   pct: 47.85, color: "#3DFFA8" },
+        { label: "Others (Gen + OBC)", pct: 47.38, color: "rgba(255,255,255,0.25)" },
+        { label: "Scheduled Castes",   pct: 4.77,  color: "#FFD97A" }
+      ]
     }
   },
 

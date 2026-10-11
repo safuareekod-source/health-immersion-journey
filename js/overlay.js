@@ -138,11 +138,25 @@ const Overlay = (() => {
     const a = c.areaProfile;
     const cells = a.stats.map(s =>
       '<div class="stat"><div class="num" data-v="' + s.value + '" data-s="' + (s.suffix || "") + '" data-d="' + (s.decimals || 0) + '">0</div><div class="lbl">' + s.label + "</div></div>").join("");
+    /* donut pie of the community mix — left; big SC/ST callout + legend — right */
+    let acc = 0;
+    const segs = a.highlight.pie.map(s => {
+      const from = acc; acc += s.pct;
+      return s.color + " " + from + "% " + acc + "%";
+    }).join(", ");
+    const legend = a.highlight.pie.map(s =>
+      '<div class="pie-leg ir"><span class="dot" style="background:' + s.color + '"></span>' +
+      '<span class="pl">' + s.label + '</span><span class="pv">' + s.pct.toFixed(1) + "%</span></div>").join("");
     return '<div class="cards">' +
       '<div class="gcard featured"><div class="kicker ir">Stop 2 · Area Profile</div><h2 class="ir">' + a.place + "</h2>" +
         '<div class="muted ir">' + a.intro + "</div></div>" +
-      '<div class="gcard"><div class="hl-strip ir"><span class="big">' + a.highlight.big + '</span><span class="hlc">' + a.highlight.caption +
-        '<span class="hln">' + a.highlight.note + "</span></span></div></div>" +
+      '<div class="gcard"><div class="pie-wrap">' +
+        '<div class="pie ir" style="background:conic-gradient(' + segs + ')"><div class="pie-hole"><span class="pie-big">' + a.highlight.big + '</span><span class="pie-sub">SC / ST</span></div></div>' +
+        '<div class="pie-side">' +
+          '<div class="pie-cap ir">' + a.highlight.caption + "</div>" +
+          '<div class="pie-note ir">' + a.highlight.note + "</div>" +
+          '<div class="pie-legend">' + legend + "</div>" +
+        "</div></div></div>" +
       '<div class="gcard featured"><div class="stats stats4">' + cells + "</div></div></div>";
   };
 

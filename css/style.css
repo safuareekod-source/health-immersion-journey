@@ -194,6 +194,31 @@ body.fallback[data-scene="s7"] {
 .item .gact { font-size: 15.5px; font-weight: 600; color: var(--accent); margin-top: 8px; }
 .wayf-card { padding: 14px 24px 14px; }
 
+/* ---------- SC/ST community donut (area profile) ---------- */
+.pie-wrap { display: flex; align-items: center; gap: 26px; }
+.pie { width: 190px; height: 190px; flex: 0 0 190px; border-radius: 50%;
+  box-shadow: 0 10px 30px rgba(3,10,7,0.5), 0 0 34px rgba(61,255,168,0.18);
+  display: flex; align-items: center; justify-content: center; position: relative; }
+.pie-hole { width: 118px; height: 118px; border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, rgba(20,32,24,0.96), rgba(10,20,16,0.98));
+  border: 1px solid rgba(255,255,255,0.14);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.pie-big { font-size: 34px; font-weight: 800; color: var(--accent); line-height: 1;
+  text-shadow: 0 0 18px rgba(61,255,168,0.45); }
+.pie-sub { font-size: 11px; font-weight: 800; color: var(--ink-dim); letter-spacing: 2px;
+  text-transform: uppercase; margin-top: 3px; }
+.pie-side { flex: 1; min-width: 0; }
+.pie-cap { font-size: 21px; font-weight: 800; color: var(--ink); line-height: 1.25; }
+.pie-note { font-size: 13.5px; font-weight: 600; color: var(--ink-dim); margin-top: 3px; }
+.pie-legend { margin-top: 10px; display: grid; gap: 6px; }
+.pie-leg { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.pie-leg .dot { width: 12px; height: 12px; border-radius: 4px; flex: 0 0 12px; }
+.pie-leg .pl { color: var(--ink-soft); font-weight: 600; flex: 1; }
+.pie-leg .pv { color: var(--ink); font-weight: 800; }
+@media (max-width: 900px) {
+  .pie-wrap { flex-direction: column; }
+}
+
 /* the Kerala / South-India technical edge highlight */
 .edge-card {
   border: 1px solid rgba(255,217,122,0.45);
