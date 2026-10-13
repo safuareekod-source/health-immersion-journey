@@ -8,7 +8,6 @@ const S1 = (() => {
   const W = window.World, C = window.JOURNEY_CONTENT;
   let built = false, started = false, startBtnEl = null;
   let bench, sign;
-  let musicArmed = false;
 
   function build() {
     if (built || W.fallback) return;
@@ -27,28 +26,6 @@ const S1 = (() => {
     sign.scale.setScalar(1);   /* static prop — survives forward/back navigation */
   }
 
-  /* opening music: try to start immediately; browsers block audio until the
-     first gesture, so also arm every gesture type — it begins at the very
-     first click / key / wheel / touch, and stops when Begin is pressed.
-     A visible pill guarantees one obvious click if nothing else works. */
-  function tryMusic() {
-    if (started) return;
-    Sfx.unlock();
-    Sfx.musicStart();
-  }
-  function armMusic() {
-    if (musicArmed) return;
-    musicArmed = true;
-    tryMusic();   /* may work if the browser allows it already */
-    const go = () => {
-      tryMusic();
-      ["pointerdown", "keydown", "wheel", "touchstart"].forEach(ev =>
-        window.removeEventListener(ev, go));
-    };
-    ["pointerdown", "keydown", "wheel", "touchstart"].forEach(ev =>
-      window.addEventListener(ev, go, { passive: true }));
-  }
-
   function beats() {
     return [
       /* B1 — drift-in + the ONE hero card (name, details, Begin) */
@@ -64,7 +41,6 @@ const S1 = (() => {
             Fellow.pose("sit");
             W.fly(tl, [7.5, 4.2, 6.5], [0.8, 1.2, -2.5], 3.2);
           }
-          armMusic();
           tl.add(() => {
             const el = Overlay.show(Overlay.T.hero(C), { pos: "pos-hero" });
             startBtnEl = el.querySelector("#start-btn");
@@ -113,7 +89,7 @@ const S1 = (() => {
     if (started) return;
     started = true;
     Sfx.unlock();
-    Sfx.musicStop(0.8);
+    Sfx.musicStop(0.8, true);   /* Begin always turns the music off */
     Sfx.begin();
     if (!W.fallback) {
       const tl = gsap.timeline();

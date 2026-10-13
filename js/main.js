@@ -86,13 +86,7 @@
       });
       setInterval(() => mt.classList.toggle("playing", Sfx.musicPlaying), 350);
     }
-    /* music is DEFAULT-ON: the browser may block it before the first gesture,
-       so the first click / key / touch of any kind turns it on */
-    ["pointerdown", "keydown", "touchend"].forEach(ev => {
-      window.addEventListener(ev, () => {
-        if (Sfx.musicWanted && !Sfx.musicPlaying && !Sfx.isMuted()) Sfx.musicStart();
-      }, { passive: true });
-    });
+
     if (!World.fallback) {
       /* images for textures load async inside scenes; start loop now */
     }

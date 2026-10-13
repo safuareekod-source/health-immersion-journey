@@ -46,7 +46,7 @@ const Sfx = (() => {
   /* Satie — Gymnopédie No.1 (piano, Kevin MacLeod, freely licensed via
      Wikimedia Commons) — loops softly on the welcome page. */
   let musicAudio = null;
-  let musicWanted = true;    /* default: music ON from site load */
+  let musicWanted = false;   /* music OFF until the icon is tapped */
   function setWanted(v) { musicWanted = v; }
 
   function ensureMusicAudio() {
